@@ -1,0 +1,32 @@
+[
+  {
+    "flightNo": "CI100",
+    "route": "TPE \u2192 LAX",
+    "time": "2025-06-21T00:30",
+    "status": "On Time"
+  },
+  {
+    "flightNo": "BR215",
+    "route": "TPE \u2192 HND",
+    "time": "2025-06-21T08:45",
+    "status": "Delayed"
+  },
+  {
+    "flightNo": "CX530",
+    "route": "TPE \u2192 HKG",
+    "time": "2025-06-21T12:15",
+    "status": "On Time"
+  },
+  {
+    "flightNo": "AA180",
+    "route": "LAX \u2192 TPE",
+    "time": "2025-06-21T16:20",
+    "status": "On Time"
+  },
+  {
+    "flightNo": "JL813",
+    "route": "NRT \u2192 TPE",
+    "time": "2025-06-21T20:50",
+    "status": "Cancelled"
+  }
+]
