@@ -78,11 +78,27 @@
   document.addEventListener('DOMContentLoaded', () => {
     const canvas = ensureCanvas();
     const ctx = canvas.getContext('2d');
-    canvas.addEventListener('click', (e) => {
+    document.addEventListener('click', (e) => {
       createFirework(e.clientX, e.clientY);
     });
+
+    function scheduleRandomFireworks() {
+      const delay = 1000 + Math.random() * 4000; // 1-5s
+      setTimeout(() => {
+        const numBursts = Math.floor(Math.random() * 3) + 1; // 1-3 bursts
+        for (let i = 0; i < numBursts; i++) {
+          createFirework(
+            Math.random() * canvas.width,
+            Math.random() * canvas.height
+          );
+        }
+        scheduleRandomFireworks();
+      }, delay);
+    }
+
     // initial firework
     createFirework(canvas.width / 2, canvas.height / 2);
+    scheduleRandomFireworks();
     update(ctx, canvas);
   });
 })();
