@@ -29,6 +29,13 @@ body {
   animation: fadeIn 3s ease-in-out;
 }
 
+#fireworks-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
