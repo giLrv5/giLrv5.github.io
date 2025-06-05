@@ -1,15 +1,15 @@
 // flights.js
-// Fetches flight timetable data from Taoyuan Airport API and displays it
+// Displays flight timetable data from a local JSON file
 
 document.addEventListener('DOMContentLoaded', () => {
   const statusEl = document.getElementById('status');
   const tableEl = document.getElementById('flights-table');
   const tbodyEl = tableEl.querySelector('tbody');
 
-  // Placeholder API endpoint. Replace with real endpoint if available.
-  const API_URL = 'https://www.taoyuan-airport.com/api/flight_timetable';
+  // Static data file for 2025/06/21 flights
+  const DATA_URL = 'out.json';
 
-  fetch(API_URL)
+  fetch(DATA_URL)
     .then((resp) => {
       if (!resp.ok) throw new Error('Network response was not ok');
       return resp.json();
