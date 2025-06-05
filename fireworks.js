@@ -78,7 +78,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     const canvas = ensureCanvas();
     const ctx = canvas.getContext('2d');
-    document.addEventListener('click', (e) => {
+    canvas.addEventListener('click', (e) => {
       createFirework(e.clientX, e.clientY);
     });
     // initial firework
