@@ -76,40 +76,6 @@
         }
 
         #dynamic-tip {
-            margin-top: 2rem;
-            padding: 1.15rem 1.5rem;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.78);
-            box-shadow: 0 15px 35px rgba(16, 37, 66, 0.12);
-            color: #1f2e4d;
-            letter-spacing: 0.02em;
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.45rem;
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.75s ease, transform 0.75s ease;
-        }
-
-        #dynamic-tip.is-hidden {
-            opacity: 0;
-            transform: translateY(16px);
-        }
-
-        #dynamic-tip .tip-label {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: #4a64a6;
-        }
-
-        #dynamic-tip .tip-text {
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-align: center;
-            color: #1b2a4a;
         }
 
         .floating-ornaments {
@@ -173,43 +139,11 @@
     </div>
     <div id="container">
         <h1>測試網頁</h1>
-        <p><span class="label">您的 IP: </span><span id="ip">確認中...</span></p>
-        <p><span class="label">現在時間: </span><span id="time">確認中...</span></p>
-        <p id="dynamic-tip" aria-live="polite">
-            <span class="tip-label" aria-hidden="true">💡 今日貼心提醒</span>
-            <span class="tip-text">祝你有個順利的一天！</span>
         </p>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var ipEl = document.getElementById('ip');
-            var timeEl = document.getElementById('time');
-
-            function createContentSettler(element, fallbackText, delay) {
-                if (delay === void 0) { delay = 4000; }
-                var settled = false;
-                var timer = window.setTimeout(function () {
-                    if (!settled) {
-                        var current = (element.textContent || '').trim();
-                        if (!current || current === '確認中' || current === '確認中...' || current === '讀取中...' || current === '讀取中…') {
-                            element.textContent = fallbackText;
-                        }
-                    }
-                }, delay);
-                return function () {
-                    if (!settled) {
-                        settled = true;
-                        window.clearTimeout(timer);
-                    }
-                };
-            }
-
-            var settleIp = createContentSettler(ipEl, '目前無法取得 IP');
-            var settleTime = createContentSettler(timeEl, '時間同步失敗，請重新整理', 5000);
-
-            function setIpText(text) {
-                ipEl.textContent = text;
-                settleIp();
             }
 
             // 取得使用者 IP
@@ -265,23 +199,6 @@
             ];
             var tipIndex = 0;
             var tipEl = document.getElementById('dynamic-tip');
-            var tipTextEl = tipEl.querySelector('.tip-text');
-            var settleTip = createContentSettler(tipTextEl, tips[0], 2500);
-
-            function renderTip(index) {
-                tipTextEl.textContent = tips[index];
-                settleTip();
-            }
-
-            renderTip(tipIndex);
-
-            setInterval(function () {
-                tipEl.classList.add('is-hidden');
-                setTimeout(function () {
-                    tipIndex = (tipIndex + 1) % tips.length;
-                    renderTip(tipIndex);
-                    tipEl.classList.remove('is-hidden');
-                }, 275);
             }, 4200);
         });
     </script>
