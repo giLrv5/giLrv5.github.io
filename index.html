@@ -76,40 +76,6 @@
         }
 
         #dynamic-tip {
-            margin-top: 2rem;
-            padding: 1.15rem 1.5rem;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.78);
-            box-shadow: 0 15px 35px rgba(16, 37, 66, 0.12);
-            color: #1f2e4d;
-            letter-spacing: 0.02em;
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.45rem;
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.75s ease, transform 0.75s ease;
-        }
-
-        #dynamic-tip.is-hidden {
-            opacity: 0;
-            transform: translateY(16px);
-        }
-
-        #dynamic-tip .tip-label {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: #4a64a6;
-        }
-
-        #dynamic-tip .tip-text {
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-align: center;
-            color: #1b2a4a;
         }
 
         .floating-ornaments {
@@ -240,21 +206,6 @@
             ];
             var tipIndex = 0;
             var tipEl = document.getElementById('dynamic-tip');
-            var tipTextEl = tipEl.querySelector('.tip-text');
-
-            function renderTip(index) {
-                tipTextEl.textContent = tips[index];
-            }
-
-            renderTip(tipIndex);
-
-            setInterval(function () {
-                tipEl.classList.add('is-hidden');
-                setTimeout(function () {
-                    tipIndex = (tipIndex + 1) % tips.length;
-                    renderTip(tipIndex);
-                    tipEl.classList.remove('is-hidden');
-                }, 275);
             }, 4200);
         });
     </script>
