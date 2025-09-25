@@ -139,19 +139,11 @@
     </div>
     <div id="container">
         <h1>測試網頁</h1>
-        <p><span class="label">您的 IP: </span><span id="ip">讀取中...</span></p>
-        <p><span class="label">現在時間: </span><span id="time">讀取中...</span></p>
-        <p id="dynamic-tip" aria-live="polite">
-            <span class="tip-label" aria-hidden="true">💡 今日貼心提醒</span>
-            <span class="tip-text">讀取中...</span>
         </p>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var ipEl = document.getElementById('ip');
-
-            function setIpText(text) {
-                ipEl.textContent = text;
             }
 
             // 取得使用者 IP
@@ -193,7 +185,8 @@
 
             function updateTime() {
                 var now = new Date();
-                document.getElementById('time').textContent = now.toLocaleString();
+                timeEl.textContent = now.toLocaleString();
+                settleTime();
             }
             updateTime();
             setInterval(updateTime, 1000);
