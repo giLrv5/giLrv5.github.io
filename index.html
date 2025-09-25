@@ -76,13 +76,6 @@
         }
 
         #dynamic-tip {
-            margin-top: 1.75rem;
-            font-style: italic;
-            color: #5b6c8f;
-            letter-spacing: 0.02em;
-            opacity: 0;
-            transform: translateY(12px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
         #dynamic-tip.show {
@@ -153,7 +146,6 @@
         <h1>測試網頁</h1>
         <p><span class="label">您的 IP: </span><span id="ip">讀取中...</span></p>
         <p><span class="label">現在時間: </span><span id="time">讀取中...</span></p>
-        <p id="dynamic-tip" aria-live="polite"></p>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -182,9 +174,6 @@
             ];
             var tipIndex = 0;
             var tipEl = document.getElementById('dynamic-tip');
-
-            function showTip(index) {
-                tipEl.textContent = tips[index];
                 requestAnimationFrame(function () {
                     tipEl.classList.add('show');
                 });
