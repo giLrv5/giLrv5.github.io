@@ -78,11 +78,6 @@
         #dynamic-tip {
         }
 
-        #dynamic-tip.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         .floating-ornaments {
             position: fixed;
             inset: 0;
@@ -146,18 +141,55 @@
         <h1>測試網頁</h1>
         <p><span class="label">您的 IP: </span><span id="ip">讀取中...</span></p>
         <p><span class="label">現在時間: </span><span id="time">讀取中...</span></p>
+        <p id="dynamic-tip" aria-live="polite">
+            <span class="tip-label" aria-hidden="true">💡 今日貼心提醒</span>
+            <span class="tip-text">讀取中...</span>
+        </p>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            var ipEl = document.getElementById('ip');
+
+            function setIpText(text) {
+                ipEl.textContent = text;
+            }
+
             // 取得使用者 IP
-            fetch('https://api.ipify.org?format=json')
-                .then(function (response) { return response.json(); })
-                .then(function (data) {
-                    document.getElementById('ip').textContent = data.ip;
-                })
-                .catch(function () {
-                    document.getElementById('ip').textContent = '無法取得 IP';
-                });
+            if (window.fetch) {
+                fetch('https://api.ipify.org?format=json')
+                    .then(function (response) { return response.json(); })
+                    .then(function (data) {
+                        setIpText(data.ip);
+                    })
+                    .catch(function () {
+                        setIpText('無法取得 IP');
+                    });
+            } else {
+                try {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', 'https://api.ipify.org?format=json', true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status >= 200 && xhr.status < 300) {
+                                try {
+                                    var response = JSON.parse(xhr.responseText);
+                                    setIpText(response.ip);
+                                } catch (e) {
+                                    setIpText('無法解析 IP 資料');
+                                }
+                            } else {
+                                setIpText('無法取得 IP');
+                            }
+                        }
+                    };
+                    xhr.onerror = function () {
+                        setIpText('無法取得 IP');
+                    };
+                    xhr.send();
+                } catch (e) {
+                    setIpText('無法取得 IP');
+                }
+            }
 
             function updateTime() {
                 var now = new Date();
@@ -174,19 +206,6 @@
             ];
             var tipIndex = 0;
             var tipEl = document.getElementById('dynamic-tip');
-                requestAnimationFrame(function () {
-                    tipEl.classList.add('show');
-                });
-            }
-
-            showTip(tipIndex);
-
-            setInterval(function () {
-                tipEl.classList.remove('show');
-                setTimeout(function () {
-                    tipIndex = (tipIndex + 1) % tips.length;
-                    showTip(tipIndex);
-                }, 250);
             }, 4200);
         });
     </script>
