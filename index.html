@@ -5,28 +5,225 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>測試網頁</title>
     <style>
-        body { font-family: sans-serif; padding: 2rem; }
-        #container { margin: 0 auto; max-width: 600px; }
-        .label { font-weight: bold; }
+        :root { color-scheme: light; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: linear-gradient(120deg, #a1c4fd, #c2e9fb, #fdeff9);
+            background-size: 200% 200%;
+            animation: gradientShift 18s ease-in-out infinite;
+            color: #102542;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.45), transparent 55%),
+                        radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.35), transparent 50%),
+                        radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.25), transparent 45%);
+            opacity: 0.8;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            animation: twinkle 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from { opacity: 0.5; }
+            to { opacity: 0.9; }
+        }
+
+        #container {
+            position: relative;
+            z-index: 1;
+            max-width: 640px;
+            width: min(100%, 640px);
+            padding: 2.5rem clamp(1.5rem, 4vw, 3rem);
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 25px 50px rgba(16, 37, 66, 0.15);
+            backdrop-filter: blur(12px);
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 0;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+        }
+
+        .label {
+            font-weight: 600;
+            color: #30475e;
+        }
+
+        p {
+            margin: 0.75rem 0;
+            font-size: 1.05rem;
+        }
+
+        #dynamic-tip {
+            margin-top: 2rem;
+            padding: 1.15rem 1.5rem;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.78);
+            box-shadow: 0 15px 35px rgba(16, 37, 66, 0.12);
+            color: #1f2e4d;
+            letter-spacing: 0.02em;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.45rem;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.75s ease, transform 0.75s ease;
+        }
+
+        #dynamic-tip.is-hidden {
+            opacity: 0;
+            transform: translateY(16px);
+        }
+
+        #dynamic-tip .tip-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: #4a64a6;
+        }
+
+        #dynamic-tip .tip-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            color: #1b2a4a;
+        }
+
+        .floating-ornaments {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-ornaments span {
+            position: absolute;
+            bottom: -15vh;
+            left: var(--left);
+            width: var(--size);
+            height: var(--size);
+            background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+            opacity: 0.5;
+            border-radius: 50%;
+            filter: blur(0.5px);
+            animation: rise var(--duration) linear infinite;
+            animation-delay: var(--delay);
+            transform: scale(0.9);
+        }
+
+        .floating-ornaments span:nth-child(odd) {
+            mix-blend-mode: screen;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translate3d(0, 0, 0) scale(0.8);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.45;
+            }
+            50% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate3d(0, -130vh, 0) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 1.5rem; }
+            #container { padding: 2rem clamp(1.25rem, 6vw, 2.5rem); }
+        }
     </style>
 </head>
 <body>
+    <div class="floating-ornaments" aria-hidden="true">
+        <span style="--size: 140px; --left: 8%; --delay: -2s; --duration: 22s;"></span>
+        <span style="--size: 110px; --left: 28%; --delay: -6s; --duration: 18s;"></span>
+        <span style="--size: 180px; --left: 50%; --delay: -10s; --duration: 26s;"></span>
+        <span style="--size: 130px; --left: 70%; --delay: -4s; --duration: 20s;"></span>
+        <span style="--size: 160px; --left: 88%; --delay: -12s; --duration: 24s;"></span>
+        <span style="--size: 100px; --left: 40%; --delay: -8s; --duration: 16s;"></span>
+    </div>
     <div id="container">
         <h1>測試網頁</h1>
         <p><span class="label">您的 IP: </span><span id="ip">讀取中...</span></p>
         <p><span class="label">現在時間: </span><span id="time">讀取中...</span></p>
+        <p id="dynamic-tip" aria-live="polite">
+            <span class="tip-label" aria-hidden="true">💡 今日貼心提醒</span>
+            <span class="tip-text">讀取中...</span>
+        </p>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            var ipEl = document.getElementById('ip');
+
+            function setIpText(text) {
+                ipEl.textContent = text;
+            }
+
             // 取得使用者 IP
-            fetch('https://api.ipify.org?format=json')
-                .then(function (response) { return response.json(); })
-                .then(function (data) {
-                    document.getElementById('ip').textContent = data.ip;
-                })
-                .catch(function () {
-                    document.getElementById('ip').textContent = '無法取得 IP';
-                });
+            if (window.fetch) {
+                fetch('https://api.ipify.org?format=json')
+                    .then(function (response) { return response.json(); })
+                    .then(function (data) {
+                        setIpText(data.ip);
+                    })
+                    .catch(function () {
+                        setIpText('無法取得 IP');
+                    });
+            } else {
+                try {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', 'https://api.ipify.org?format=json', true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status >= 200 && xhr.status < 300) {
+                                try {
+                                    var response = JSON.parse(xhr.responseText);
+                                    setIpText(response.ip);
+                                } catch (e) {
+                                    setIpText('無法解析 IP 資料');
+                                }
+                            } else {
+                                setIpText('無法取得 IP');
+                            }
+                        }
+                    };
+                    xhr.onerror = function () {
+                        setIpText('無法取得 IP');
+                    };
+                    xhr.send();
+                } catch (e) {
+                    setIpText('無法取得 IP');
+                }
+            }
 
             function updateTime() {
                 var now = new Date();
@@ -34,6 +231,31 @@
             }
             updateTime();
             setInterval(updateTime, 1000);
+
+            var tips = [
+                '祝你有個順利的一天！',
+                '記得適時起身活動，讓靈感更流動。',
+                '🌤️ 小憩一下，喝杯水再繼續前進。',
+                '好奇心是最好的導航，保持探索！'
+            ];
+            var tipIndex = 0;
+            var tipEl = document.getElementById('dynamic-tip');
+            var tipTextEl = tipEl.querySelector('.tip-text');
+
+            function renderTip(index) {
+                tipTextEl.textContent = tips[index];
+            }
+
+            renderTip(tipIndex);
+
+            setInterval(function () {
+                tipEl.classList.add('is-hidden');
+                setTimeout(function () {
+                    tipIndex = (tipIndex + 1) % tips.length;
+                    renderTip(tipIndex);
+                    tipEl.classList.remove('is-hidden');
+                }, 275);
+            }, 4200);
         });
     </script>
 </body>
