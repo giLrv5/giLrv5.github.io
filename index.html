@@ -76,40 +76,11 @@
         }
 
         #dynamic-tip {
-            margin-top: 2rem;
-            padding: 1.15rem 1.5rem;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.78);
-            box-shadow: 0 15px 35px rgba(16, 37, 66, 0.12);
-            color: #1f2e4d;
-            letter-spacing: 0.02em;
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.45rem;
-            opacity: 0;
-            transform: translateY(16px);
-            transition: opacity 0.75s ease, transform 0.75s ease;
         }
 
         #dynamic-tip.show {
             opacity: 1;
             transform: translateY(0);
-        }
-
-        #dynamic-tip .tip-label {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: #4a64a6;
-        }
-
-        #dynamic-tip .tip-text {
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-align: center;
-            color: #1b2a4a;
         }
 
         .floating-ornaments {
@@ -175,10 +146,6 @@
         <h1>測試網頁</h1>
         <p><span class="label">您的 IP: </span><span id="ip">讀取中...</span></p>
         <p><span class="label">現在時間: </span><span id="time">讀取中...</span></p>
-        <p id="dynamic-tip" aria-live="polite">
-            <span class="tip-label" aria-hidden="true">💡 今日貼心提醒</span>
-            <span class="tip-text">讀取中...</span>
-        </p>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -207,10 +174,6 @@
             ];
             var tipIndex = 0;
             var tipEl = document.getElementById('dynamic-tip');
-            var tipTextEl = tipEl.querySelector('.tip-text');
-
-            function showTip(index) {
-                tipTextEl.textContent = tips[index];
                 requestAnimationFrame(function () {
                     tipEl.classList.add('show');
                 });
