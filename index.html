@@ -11,8 +11,31 @@
       function gtag() {
         dataLayer.push(arguments);
       }
+
+      const GA_MEASUREMENT_ID = "G-WGRE5XGNNF";
+
       gtag("js", new Date());
-      gtag("config", "G-WGRE5XGNNF");
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        analytics_storage: "granted",
+      });
+      gtag("config", GA_MEASUREMENT_ID, {
+        anonymize_ip: true,
+        send_page_view: true,
+      });
+
+      document.addEventListener("click", (event) => {
+        const link = event.target.closest("a[href]");
+        if (!link) return;
+
+        gtag("event", "click", {
+          event_category: "outbound",
+          event_label: link.href,
+          transport_type: "beacon",
+        });
+      });
     </script>
     <style>
       body {
